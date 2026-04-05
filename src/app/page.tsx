@@ -3,7 +3,11 @@ import { redirect } from "next/navigation";
 import { LoginForm } from "@/components/auth/login-form";
 import { ShoppingCart } from "lucide-react";
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
   const supabase = await createClient();
   const {
     data: { user },
@@ -12,6 +16,8 @@ export default async function Home() {
   if (user) {
     redirect("/dashboard");
   }
+
+  const { error } = await searchParams;
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-emerald-50 to-white px-4">
@@ -27,6 +33,11 @@ export default async function Home() {
             Your household&apos;s shared shopping list
           </p>
         </div>
+        {error && (
+          <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-center text-sm text-red-700">
+            {error}
+          </div>
+        )}
         <LoginForm />
       </div>
     </main>

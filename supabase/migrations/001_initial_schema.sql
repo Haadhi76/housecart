@@ -405,6 +405,7 @@ CREATE TRIGGER on_auth_user_created
 CREATE OR REPLACE FUNCTION public.generate_invite_code()
 RETURNS VARCHAR(8)
 LANGUAGE plpgsql
+SET search_path = ''
 AS $$
 DECLARE
   chars  TEXT := 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
